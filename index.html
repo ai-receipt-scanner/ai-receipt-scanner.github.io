@@ -280,7 +280,7 @@
             box-shadow:
                 0 0 0 1px rgba(0,0,0,0.3),
                 0 20px 60px rgba(0,0,0,0.5),
-                0 0 80px var(--accent-glow);
+                0 0 80px rgba(240,200,80,0.12);
             animation: float 6s ease-in-out infinite;
         }
         @keyframes float {
@@ -305,28 +305,59 @@
             z-index: 2;
         }
         .phone-content {
-            padding: 16px 18px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 28px);
         }
-        .phone-header {
-            font-size: 11px;
-            color: var(--text-dim);
-            margin-bottom: 12px;
+        /* App nav bar */
+        .phone-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .phone-title {
+        .phone-navbar-title {
             font-family: var(--serif);
-            font-size: 20px;
-            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text);
+        }
+        .phone-navbar-icon {
+            width: 20px; height: 20px;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+        /* Scrollable receipt list */
+        .phone-list {
+            flex: 1;
+            padding: 12px 14px 0;
+            overflow: hidden;
+        }
+        .phone-section-header {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .phone-section-header:not(:first-child) {
+            margin-top: 12px;
         }
         .receipt-card {
             background: rgba(255,255,255,0.04);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
             animation: cardSlide 0.6s ease both;
         }
-        .receipt-card:nth-child(2) { animation-delay: 0.15s; }
-        .receipt-card:nth-child(3) { animation-delay: 0.3s; }
+        .receipt-card:nth-child(2) { animation-delay: 0.1s; }
+        .receipt-card:nth-child(3) { animation-delay: 0.2s; }
+        .receipt-card:nth-child(5) { animation-delay: 0.3s; }
+        .receipt-card:nth-child(6) { animation-delay: 0.4s; }
         @keyframes cardSlide {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
@@ -335,46 +366,75 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .rc-vendor {
             font-weight: 600;
             font-size: 13px;
         }
         .rc-amount {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
-            font-size: 14px;
-            color: var(--accent);
+            font-size: 13px;
+            color: var(--gold);
         }
         .rc-meta {
             display: flex;
-            gap: 12px;
-            font-size: 11px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
             color: var(--text-dim);
         }
         .rc-tag {
-            background: var(--accent-glow);
-            color: var(--accent);
             padding: 2px 8px;
             border-radius: 6px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
         }
-        .scan-line {
+        .rc-tag--food { background: rgba(76,175,80,0.15); color: #66bb6a; }
+        .rc-tag--transport { background: rgba(74,158,255,0.12); color: #4a9eff; }
+        .rc-tag--coffee { background: rgba(255,183,77,0.15); color: #ffb74d; }
+        .rc-tag--groceries { background: rgba(0,212,170,0.12); color: #00d4aa; }
+        .rc-tag--entertainment { background: rgba(168,130,255,0.12); color: #a882ff; }
+        /* FAB scan button */
+        .phone-fab {
             position: absolute;
-            left: 18px; right: 18px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            border-radius: 2px;
-            animation: scanMove 3s ease-in-out infinite;
-            box-shadow: 0 0 12px var(--accent);
+            bottom: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px; height: 48px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #d4a843, #f0c850);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(240,200,80,0.35);
+            z-index: 5;
         }
-        @keyframes scanMove {
-            0%, 100% { top: 30%; opacity: 0; }
-            10% { opacity: 1; }
-            50% { top: 75%; opacity: 1; }
-            60% { opacity: 0; }
+        .phone-fab svg { width: 22px; height: 22px; color: #1a1a2e; }
+        /* Tab bar */
+        .phone-tabbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 8px 0 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: rgba(10,22,40,0.95);
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            border-radius: 0 0 30px 30px;
         }
+        .phone-tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            font-size: 9px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        .phone-tab--active { color: var(--gold); }
+        .phone-tab svg { width: 18px; height: 18px; }
 
         /* ─── Stats bar ─── */
         .stats {
@@ -907,40 +967,76 @@
                     <div class="phone-screen">
                         <div class="phone-notch"></div>
                         <div class="phone-content">
-                            <div class="phone-header">RECENT RECEIPTS</div>
-                            <div class="phone-title">This Week</div>
-                            <div class="receipt-card">
-                                <div class="rc-top">
-                                    <span class="rc-vendor">Whole Foods</span>
-                                    <span class="rc-amount">$87.42</span>
+                            <!-- Nav bar -->
+                            <div class="phone-navbar">
+                                <span class="phone-navbar-title">Receiptly</span>
+                                <svg class="phone-navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                            </div>
+                            <!-- Receipt list -->
+                            <div class="phone-list">
+                                <div class="phone-section-header">Today</div>
+                                <div class="receipt-card">
+                                    <div class="rc-top">
+                                        <span class="rc-vendor">Whole Foods</span>
+                                        <span class="rc-amount">$87.42</span>
+                                    </div>
+                                    <div class="rc-meta">
+                                        <span>2:30 PM</span>
+                                        <span class="rc-tag rc-tag--groceries">Groceries</span>
+                                    </div>
                                 </div>
-                                <div class="rc-meta">
-                                    <span>Today, 2:30 PM</span>
-                                    <span class="rc-tag">Groceries</span>
+                                <div class="receipt-card">
+                                    <div class="rc-top">
+                                        <span class="rc-vendor">Starbucks</span>
+                                        <span class="rc-amount">$6.80</span>
+                                    </div>
+                                    <div class="rc-meta">
+                                        <span>9:15 AM</span>
+                                        <span class="rc-tag rc-tag--coffee">Coffee</span>
+                                    </div>
+                                </div>
+                                <div class="phone-section-header">Yesterday</div>
+                                <div class="receipt-card">
+                                    <div class="rc-top">
+                                        <span class="rc-vendor">Uber</span>
+                                        <span class="rc-amount">$24.50</span>
+                                    </div>
+                                    <div class="rc-meta">
+                                        <span>6:45 PM</span>
+                                        <span class="rc-tag rc-tag--transport">Transport</span>
+                                    </div>
+                                </div>
+                                <div class="receipt-card">
+                                    <div class="rc-top">
+                                        <span class="rc-vendor">Netflix</span>
+                                        <span class="rc-amount">$15.99</span>
+                                    </div>
+                                    <div class="rc-meta">
+                                        <span>12:00 AM</span>
+                                        <span class="rc-tag rc-tag--entertainment">Entertainment</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="receipt-card">
-                                <div class="rc-top">
-                                    <span class="rc-vendor">Uber</span>
-                                    <span class="rc-amount">$24.50</span>
-                                </div>
-                                <div class="rc-meta">
-                                    <span>Yesterday</span>
-                                    <span class="rc-tag">Transport</span>
-                                </div>
+                            <!-- FAB -->
+                            <div class="phone-fab">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
                             </div>
-                            <div class="receipt-card">
-                                <div class="rc-top">
-                                    <span class="rc-vendor">Starbucks</span>
-                                    <span class="rc-amount">$6.80</span>
+                            <!-- Tab bar -->
+                            <div class="phone-tabbar">
+                                <div class="phone-tab phone-tab--active">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                    <span>Receipts</span>
                                 </div>
-                                <div class="rc-meta">
-                                    <span>Feb 11</span>
-                                    <span class="rc-tag">Food</span>
+                                <div class="phone-tab">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    <span>Analytics</span>
+                                </div>
+                                <div class="phone-tab">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                                    <span>Reports</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="scan-line"></div>
                     </div>
                 </div>
             </div>
