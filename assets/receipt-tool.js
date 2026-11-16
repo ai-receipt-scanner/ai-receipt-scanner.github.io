@@ -106,6 +106,48 @@
 
     window.ReceiptTool = { parseAmount: parseAmount, parseReceipt: parseReceipt, toCSV: toCSV };
 
+    // ---- Messages, by page language ----
+    var MESSAGES = {
+        en: { reading: 'Reading {name}…', ok: 'Read {name}. Check the values, then download.',
+              noTotal: 'Read {name}, but no total was found. Type it in the table.',
+              failed: 'Could not read {name}. Try a sharper, well-lit photo.',
+              choose: 'Please choose a photo of a receipt (JPG or PNG).',
+              load: 'The text reader could not be loaded. Check your connection and reload the page.' },
+        de: { reading: '{name} wird gelesen…', ok: '{name} gelesen. Werte prüfen, dann herunterladen.',
+              noTotal: '{name} gelesen, aber keine Summe gefunden. Bitte in der Tabelle eintragen.',
+              failed: '{name} konnte nicht gelesen werden. Bitte ein schärferes, gut beleuchtetes Foto verwenden.',
+              choose: 'Bitte ein Foto eines Belegs wählen (JPG oder PNG).',
+              load: 'Die Texterkennung konnte nicht geladen werden. Verbindung prüfen und Seite neu laden.' },
+        es: { reading: 'Leyendo {name}…', ok: '{name} leído. Revisa los valores y descarga.',
+              noTotal: '{name} leído, pero no se encontró el total. Escríbelo en la tabla.',
+              failed: 'No se pudo leer {name}. Prueba con una foto más nítida y bien iluminada.',
+              choose: 'Elige una foto de un ticket (JPG o PNG).',
+              load: 'No se pudo cargar el lector de texto. Revisa tu conexión y recarga la página.' },
+        fr: { reading: 'Lecture de {name}…', ok: '{name} lu. Vérifiez les valeurs, puis téléchargez.',
+              noTotal: '{name} lu, mais aucun total trouvé. Saisissez-le dans le tableau.',
+              failed: 'Impossible de lire {name}. Essayez une photo plus nette et bien éclairée.',
+              choose: 'Choisissez la photo d\'un ticket (JPG ou PNG).',
+              load: 'Le lecteur de texte n\'a pas pu être chargé. Vérifiez votre connexion et rechargez la page.' },
+        it: { reading: 'Lettura di {name}…', ok: '{name} letto. Controlla i valori, poi scarica.',
+              noTotal: '{name} letto, ma nessun totale trovato. Inseriscilo nella tabella.',
+              failed: 'Impossibile leggere {name}. Prova con una foto più nitida e ben illuminata.',
+              choose: 'Scegli la foto di uno scontrino (JPG o PNG).',
+              load: 'Impossibile caricare il lettore di testo. Controlla la connessione e ricarica la pagina.' },
+        pt: { reading: 'Lendo {name}…', ok: '{name} lido. Confira os valores e baixe.',
+              noTotal: '{name} lido, mas nenhum total encontrado. Digite-o na tabela.',
+              failed: 'Não foi possível ler {name}. Tente uma foto mais nítida e bem iluminada.',
+              choose: 'Escolha a foto de um recibo (JPG ou PNG).',
+              load: 'Não foi possível carregar o leitor de texto. Verifique a conexão e recarregue a página.' },
+        nl: { reading: '{name} wordt gelezen…', ok: '{name} gelezen. Controleer de waarden en download.',
+              noTotal: '{name} gelezen, maar geen totaal gevonden. Vul het in de tabel in.',
+              failed: '{name} kon niet worden gelezen. Probeer een scherpere, goed belichte foto.',
+              choose: 'Kies een foto van een bonnetje (JPG of PNG).',
+              load: 'De tekstlezer kon niet worden geladen. Controleer je verbinding en laad de pagina opnieuw.' }
+    };
+    var pageLanguage = ((document.documentElement && document.documentElement.lang) || 'en').slice(0, 2);
+    var M = MESSAGES[pageLanguage] || MESSAGES.en;
+    function msg(key, name) { return M[key].replace('{name}', name || ''); }
+
     // ---- Page wiring ----
     var drop = document.getElementById('drop');
     if (!drop) return;
@@ -157,12 +199,12 @@
 
     async function recognise(source, name) {
         if (typeof Tesseract === 'undefined') {
-            setStatus('The text reader could not be loaded. Check your connection and reload the page.', true);
+            setStatus(msg('load'), true);
             return;
         }
         progress.style.display = 'block';
         bar.style.width = '0%';
-        setStatus('Reading ' + name + '…');
+        setStatus(msg('reading', name));
         var worker;
         try {
             worker = await Tesseract.createWorker(language.value, 1, {
@@ -175,10 +217,10 @@
             parsed.file = name;
             rows.push(parsed);
             render();
-            if (!parsed.total) setStatus('Read ' + name + ', but no total was found. Type it in the table.', true);
-            else setStatus('Read ' + name + '. Check the values, then download.');
+            if (!parsed.total) setStatus(msg('noTotal', name), true);
+            else setStatus(msg('ok', name));
         } catch (error) {
-            setStatus('Could not read ' + name + '. Try a sharper, well-lit photo.', true);
+            setStatus(msg('failed', name), true);
         } finally {
             if (worker) await worker.terminate();
             progress.style.display = 'none';
@@ -189,7 +231,7 @@
         if (busy) return;
         busy = true;
         var files = Array.prototype.slice.call(list).filter(function (f) { return /^image\//.test(f.type); });
-        if (!files.length) setStatus('Please choose a photo of a receipt (JPG or PNG).', true);
+        if (!files.length) setStatus(msg('choose'), true);
         for (var i = 0; i < files.length; i++) await recognise(files[i], files[i].name);
         busy = false;
         fileInput.value = '';
