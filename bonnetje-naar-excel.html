@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonnetje omzetten naar Excel – gratis bon-naar-CSV-converter</title>
+    <meta name="description" content="Upload een foto van een bonnetje en krijg winkel, datum, totaal en btw als CSV voor Excel. Gratis, zonder account, en de foto blijft in je browser.">
+    <link rel="canonical" href="https://ai-receipt-scanner.github.io/bonnetje-naar-excel.html">
+    <link rel="alternate" hreflang="en" href="https://ai-receipt-scanner.github.io/receipt-to-csv.html">
+    <link rel="alternate" hreflang="x-default" href="https://ai-receipt-scanner.github.io/receipt-to-csv.html">
+    <link rel="alternate" hreflang="de" href="https://ai-receipt-scanner.github.io/kassenbon-in-excel.html">
+    <link rel="alternate" hreflang="es" href="https://ai-receipt-scanner.github.io/ticket-a-excel.html">
+    <link rel="alternate" hreflang="fr" href="https://ai-receipt-scanner.github.io/ticket-de-caisse-en-excel.html">
+    <link rel="alternate" hreflang="it" href="https://ai-receipt-scanner.github.io/scontrino-in-excel.html">
+    <link rel="alternate" hreflang="pt" href="https://ai-receipt-scanner.github.io/recibo-para-excel.html">
+    <link rel="alternate" hreflang="nl" href="https://ai-receipt-scanner.github.io/bonnetje-naar-excel.html">
+    <meta property="og:title" content="Bonnetje omzetten naar Excel – gratis bon-naar-CSV-converter">
+    <meta property="og:description" content="Upload een foto van een bonnetje en krijg winkel, datum, totaal en btw als CSV voor Excel. Gratis, zonder account, en de foto blijft in je browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ai-receipt-scanner.github.io/bonnetje-naar-excel.html">
+    <meta property="og:image" content="https://ai-receipt-scanner.github.io/icon.png">
+    <meta name="apple-itunes-app" content="app-id=1600939272">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+    <header class="site-nav">
+        <div class="container">
+            <a class="brand" href="index.html"><img src="icon.png" alt=""> AI Receipt Scanner</a>
+            <ul class="nav-links">
+                <li><a class="button" href="https://apps.apple.com/app/id1600939272">Download de app</a></li>
+            </ul>
+        </div>
+    </header>
+    <main class="container">
+        <section class="hero">
+            <div class="eyebrow">Gratis tool</div>
+            <h1>Bonnetje omzetten naar Excel</h1>
+            <p class="lead">Sleep een foto van een bonnetje hierheen en krijg winkel, datum, totaal en btw als rij in een spreadsheet. Het draait in je browser, dus het bonnetje wordt niet geüpload.</p>
+        </section>
+
+        <section class="tool card" aria-label="Bonnetje omzetten naar Excel">
+            <div id="drop" class="drop" tabindex="0" role="button" aria-label="Sleep foto's van bonnetjes hierheen, of klik">
+                <strong>Sleep foto's van bonnetjes hierheen, of klik</strong>
+                <span>JPG of PNG. Meerdere tegelijk kan ook.</span>
+                <input id="file" type="file" accept="image/*" multiple hidden>
+            </div>
+            <div class="tool-row">
+                <label for="language">Taal van het bonnetje</label>
+                <select id="language">
+                    <option value="eng">English</option>
+                    <option value="deu">Deutsch</option>
+                    <option value="fra">Français</option>
+                    <option value="spa">Español</option>
+                    <option value="ita">Italiano</option>
+                    <option value="por">Português</option>
+                    <option value="nld" selected>Nederlands</option>
+                </select>
+                <button id="sample" class="button secondary" type="button">Probeer een voorbeeldbon</button>
+            </div>
+            <div id="progress" class="progress"><div></div></div>
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+            <div id="results" class="table-wrap" style="display:none">
+                <table>
+                    <thead><tr><th>Winkel</th><th>Datum</th><th>Totaal</th><th>Btw</th><th>Valuta</th><th></th></tr></thead>
+                    <tbody id="rows"></tbody>
+                </table>
+            </div>
+            <div class="tool-row">
+                <button id="download" class="button" type="button" disabled>CSV downloaden</button>
+                <button id="clear" class="button secondary" type="button" disabled>Wissen</button>
+            </div>
+        </section>
+
+        <p class="note">De converter leest gedrukte tekst met een algemene tekstlezer, dus controleer elke waarde. Vervaagde of verkreukelde bonnetjes zijn het lastigst. De iPhone-app vult de velden in met AI en heeft meestal minder correcties nodig.</p>
+
+        <h2>Zo werkt het</h2>
+        <ol>
+            <li><strong>Voeg een foto toe.</strong> Recht van voren, bij goed licht en met het hele bonnetje in beeld.</li>
+            <li><strong>Controleer de waarden.</strong> Winkel, datum, totaal en btw verschijnen in een tabel. Elke cel kun je aanpassen.</li>
+            <li><strong>Download de CSV.</strong> Open hem in Excel, Numbers of Google Sheets, of stuur hem naar je boekhouder.</li>
+        </ol>
+
+        <h3>Wordt mijn bonnetje ergens geüpload?</h3>
+        <p>Nee. De tekst wordt gelezen door code in je browser. De pagina downloadt de tekstlezer en een taalbestand, maar je afbeelding blijft op je apparaat.</p>
+        <h3>Begrijpt hij bedragen met een komma?</h3>
+        <p>Ja. 12,50 wordt gelezen als twaalf euro vijftig, en 1.234,56 als twaalfhonderdvierendertig euro zesenvijftig.</p>
+
+        <section class="cta">
+            <h2>Scan bonnetjes met je iPhone</h2>
+            <p>AI Receipt Scanner leest winkel, totaal, btw en datum, bewaart bonnetjes op je toestel en exporteert rapporten als pdf, csv of zip. Gratis te proberen, zonder account. De interface van de app is in het Engels.</p>
+            <a class="button" href="https://apps.apple.com/app/id1600939272">Download in de App Store</a>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <span>&copy; 2026 AI Receipt Scanner</span>
+            <nav class="footer-links" aria-label="Languages"><a href="receipt-to-csv.html" hreflang="en">English</a> · <a href="kassenbon-in-excel.html" hreflang="de">Deutsch</a> · <a href="ticket-a-excel.html" hreflang="es">Español</a> · <a href="ticket-de-caisse-en-excel.html" hreflang="fr">Français</a> · <a href="scontrino-in-excel.html" hreflang="it">Italiano</a> · <a href="recibo-para-excel.html" hreflang="pt">Português</a> · <strong>Nederlands</strong></nav>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+    <script src="assets/receipt-tool.js"></script>
+</body>
+</html>
